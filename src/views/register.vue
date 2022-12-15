@@ -145,7 +145,7 @@
 
         <div>
           <button
-            :isValid="isValidEmail && isValidConfirmPassword"
+            :isValid="username && isValidConfirmPassword"
             type="submit"
             class="
               group
@@ -221,6 +221,7 @@ const username = ref("xayrullo");
 const password = ref("123456");
 const confirmPassword = ref("123456");
 const error = ref();
+const errMsg = ref("");
 
 const regexpStore = useRegexpStore();
 const authStore = useAuthStore();
