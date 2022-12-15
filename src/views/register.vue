@@ -233,7 +233,7 @@ const signupHandler = async (e) => {
     .registerHandler(username.value, password.value)
     .then(() => {
       alert("successfully registered");
-      router.push("/");
+      router.push("/products");
     })
     .catch((err) => (error.value = err));
 };

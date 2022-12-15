@@ -5,7 +5,7 @@
     </template>
   </Teleport>
   <nav class="navbar">
-    <div class="navbar__logo" @click="router.push('/')">
+    <div class="navbar__logo" @click="router.push('/products')">
       <p>SPA App</p>
     </div>
     <div class="lg:hidden">
@@ -34,10 +34,6 @@
         lg:flex lg:mx-auto lg:items-center lg:w-auto lg:space-x-6
       "
     >
-      <li>
-        <RouterLink class="navbar__route" to="/">Home</RouterLink>
-      </li>
-      <li class="text-gray-300">|</li>
       <li>
         <RouterLink class="navbar__route" to="/products">Products</RouterLink>
       </li>
@@ -127,41 +123,20 @@
           <div>
             <ul>
               <li class="mb-1">
-                <RouterLink to="/" class="navbar__mobile" @click="hideSidebar"
-                  >Home</RouterLink
+                <RouterLink
+                  to="/products"
+                  class="navbar__mobile"
+                  @click="hideSidebar"
+                  >Products</RouterLink
                 >
               </li>
               <template v-if="authStore.isLoggedIn">
                 <li class="mb-1">
                   <RouterLink
-                    to="/planned"
+                    to="/my-todo"
                     class="navbar__mobile"
                     @click="hideSidebar"
-                    >Planned</RouterLink
-                  >
-                </li>
-                <li class="mb-1">
-                  <RouterLink
-                    to="/important"
-                    class="navbar__mobile"
-                    @click="hideSidebar"
-                    >Important</RouterLink
-                  >
-                </li>
-                <li class="mb-1">
-                  <RouterLink
-                    to="/daily"
-                    class="navbar__mobile"
-                    @click="hideSidebar"
-                    >Daily</RouterLink
-                  >
-                </li>
-                <li class="mb-1">
-                  <RouterLink
-                    to="/market"
-                    class="navbar__mobile"
-                    @click="hideSidebar"
-                    >Market</RouterLink
+                    >MY TODO</RouterLink
                   >
                 </li>
               </template>

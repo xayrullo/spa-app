@@ -1,15 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { useAuthStore } from "./store/auth";
-import Home from "./views/home.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    {
-      path: "/",
-      name: "home",
-      component: Home,
-    },
     {
       path: "/products",
       name: "products",
@@ -39,10 +33,9 @@ router.beforeEach(async (to, from, next) => {
     !authStore.isLoggedIn &&
     to.name !== "login" &&
     to.name !== "register" &&
-    to.name !== "products" &&
-    to.name !== "home"
+    to.name !== "products"
   )
-    return next({ name: "home" });
+    return next({ name: "products" });
   next();
 });
 

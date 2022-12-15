@@ -3,7 +3,7 @@
   <main>
     <router-view />
   </main>
-  <Footer />
+  <Footer class="fixed bottom-0" />
 </template>
 
 <script setup>

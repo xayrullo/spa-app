@@ -193,7 +193,7 @@ const loginHandler = async (e) => {
   await authStore.loginHandler(username.value, password.value);
   if (!authStore.isLoggedIn) return (errMsg.value = authStore.errMsg);
   emits("login");
-  router.push("/");
+  router.push("/products");
 };
 
 const goToRegister = () => {
