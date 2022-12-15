@@ -47,10 +47,12 @@ export const useTodoStore = defineStore("todo", {
       });
       localStorage.setItem("todos", JSON.stringify(this.todos));
     },
-    editTodo(id, ref, changedContent) {
-      updateDoc(doc(ref, id), {
-        content: changedContent,
+    editTodo(id, changedContent) {
+      console.log("five");
+      this.todos.forEach((element) => {
+        if (element.id === id) element.content = changedContent;
       });
+      localStorage.setItem("todos", JSON.stringify(this.todos));
     },
   },
 });

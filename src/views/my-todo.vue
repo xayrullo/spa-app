@@ -93,19 +93,9 @@
             <input
               class="planned__list__text"
               v-model="todo.content"
-              @keyup.enter="editTodo(todo.id, todo.content)"
+              readonly
             />
             <div class="planned__btn">
-              <div
-                @click="editTodo(todo.id, todo.content)"
-                class="planned__btn__delete"
-              >
-                <img
-                  class="icon"
-                  src="https://cdn-icons-png.flaticon.com/512/4476/4476194.png"
-                  alt=""
-                />
-              </div>
               <div @click="setUnDone(todo.id, todo)" class="planned__btn__done">
                 <img
                   class="icon"
