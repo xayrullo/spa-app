@@ -1,27 +1,20 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link> |
-    <router-link to="/contact" class="text-red-500">Contact</router-link>
-  </nav>
+  <Navbar />
   <main>
     <router-view />
   </main>
 </template>
 
-<script>
-export default {
-  name: "App",
-  components: {},
-};
+<script setup>
+import { onBeforeMount } from "vue";
+import { useAuthStore } from "./store/auth";
+import Navbar from "./components/Navbar.vue";
+
+const authStore = useAuthStore();
+
+onBeforeMount(async () => {
+  authStore.getCurrentUser();
+});
 </script>
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>
