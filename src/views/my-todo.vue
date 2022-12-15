@@ -40,7 +40,7 @@
             <input
               class="planned__list__text"
               v-model="todo.content"
-              @keyup.enter="editTodo(todo.id, todo.content)"
+              change="editTodo(todo.id, todo.content)"
             />
             <div class="planned__btn">
               <div

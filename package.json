@@ -6,6 +6,7 @@
     "build": "vite build"
   },
   "dependencies": {
+    "@tailwindcss/line-clamp": "^0.4.2",
     "pinia": "^2.0.28",
     "token-generator": "^1.0.0",
     "uniqid": "^5.4.0",
