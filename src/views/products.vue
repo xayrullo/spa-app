@@ -1,6 +1,7 @@
 <template>
   <div>
     <div class="mx-auto max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+      <Categories />
       <div
         class="
           my-6
@@ -20,4 +21,5 @@
 <script setup>
 import ProductCard from "../components/ProductCard.vue";
 import Pagination from "../components/Pagination.vue";
+import Categories from "../components/Categories.vue";
 </script>
