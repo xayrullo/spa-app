@@ -11,6 +11,11 @@ const router = createRouter({
       component: Home,
     },
     {
+      path: "/products",
+      name: "products",
+      component: () => import("./views/products.vue"),
+    },
+    {
       path: "/my-todo",
       name: "my-todo",
       component: () => import("./views/my-todo.vue"),
@@ -34,6 +39,7 @@ router.beforeEach(async (to, from, next) => {
     !authStore.isLoggedIn &&
     to.name !== "login" &&
     to.name !== "register" &&
+    to.name !== "products" &&
     to.name !== "home"
   )
     return next({ name: "home" });

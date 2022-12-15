@@ -37,6 +37,10 @@
       <li>
         <RouterLink class="navbar__route" to="/">Home</RouterLink>
       </li>
+      <li class="text-gray-300">|</li>
+      <li>
+        <RouterLink class="navbar__route" to="/products">Products</RouterLink>
+      </li>
       <template v-if="authStore.isLoggedIn">
         <li class="text-gray-300">|</li>
         <li>
