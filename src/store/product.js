@@ -28,22 +28,19 @@ export const useProductStore = defineStore("product", {
               : "products",
             {
               limit: this.pagination.limit,
-              skip:
-                params && params.page
-                  ? params.page
-                  : this.pagination.page /* page number */,
+              skip: (params.page - 1) * 12,
             }
           )
           .then((res) => {
             this.products = res.products;
             this.pagination = {
-              limit: res.limit,
-              page: res.skip,
+              limit: 12,
+              page: params.page,
               total: res.total,
               pageCount:
-                res.total % res.limit > 0
-                  ? Math.trunc(res.total / res.limit) + 1
-                  : res.total / res.limit,
+                res.total % 12 > 0
+                  ? Math.trunc(res.total / 12) + 1
+                  : res.total / 12,
             };
             resolve(res.products);
           })
