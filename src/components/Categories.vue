@@ -10,57 +10,66 @@
     <swiper-slide>
       <button
         type="button"
-        class="
-          rounded-md
-          border border-transparent
-          bg-blue-600
-          px-3
-          py-2
-          text-sm
-          font-medium
-          leading-4
-          text-white
-          shadow-sm
-          hover:bg-blue-700
-          w-full
+        class="button"
+        :class="
+          !route.query.category || route.query.category === 'all'
+            ? 'active_button'
+            : 'disactive_button'
         "
+        @click="onSelected('all')"
       >
-        Selected text
+        All
       </button>
     </swiper-slide>
-    <swiper-slide v-for="(val, ind) in 15" :key="ind">
+    <swiper-slide v-for="(val, ind) in data" :key="ind">
       <button
         type="button"
-        class="
-          rounded-md
-          border border-transparent
-          bg-blue-100
-          px-3
-          py-2
-          text-sm
-          font-medium
-          leading-4
-          text-blue-700
-          hover:bg-blue-200
-          w-full
+        class="button"
+        :class="
+          route.query.category && route.query.category === val
+            ? 'active_button'
+            : 'disactive_button'
         "
+        @click="onSelected(val)"
       >
-        Unselected text
+        {{ val }}
       </button>
     </swiper-slide>
   </swiper>
 </template>
 <script setup>
+import { onBeforeMount } from "vue";
 import { Navigation, Scrollbar, A11y } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
+import { useRoute } from "vue-router";
+
+const props = defineProps({
+  data: Array,
+});
+const emits = defineEmits(["changed"]);
+
+const route = useRoute();
 
 const modules = [Navigation, Scrollbar, A11y];
 
-const onSwiper = (swiper) => {
-  console.log(swiper);
+onBeforeMount(() => {});
+
+const onSelected = (val) => {
+  emits("changed", val);
 };
-const onSlideChange = () => {
-  console.log("slide change");
-};
+const onSwiper = (swiper) => {};
+const onSlideChange = () => {};
 </script>
+
+<style lang="scss" scoped>
+.button {
+  @apply rounded-md border border-transparent px-3 py-2 text-sm font-medium leading-4 uppercase w-full;
+}
+.active_button {
+  @apply bg-blue-600 text-white hover:bg-blue-700;
+}
+.disactive_button {
+  @apply bg-blue-100 text-blue-700 hover:bg-blue-200;
+}
+</style>
