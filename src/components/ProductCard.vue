@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <div class="card__image">
+    <router-link to="/products/detail" class="card__image">
       <div class="card__image__favourite">
         <button class="card__image__favourite__button">
           <svg
@@ -24,7 +24,7 @@
         alt="Just a flower"
         class="card__image__picture"
       />
-    </div>
+    </router-link>
     <div class="card__body">
       <div class="flex flex-wrap">
         <div class="w-full flex-none text-sm flex items-center text-gray-600">
@@ -41,7 +41,10 @@
           <span class="text-gray-400 whitespace-nowrap mr-3">4.60</span
           ><span class="mr-2 text-gray-400">India</span>
         </div>
-        <div class="flex items-center w-full justify-between min-w-0">
+        <router-link
+          to="/products/detail"
+          class="flex items-center w-full justify-between min-w-0"
+        >
           <div
             class="
               text-sm
@@ -54,7 +57,7 @@
           >
             Lorem ipsum is placeholder text commonly used in the graphic
           </div>
-        </div>
+        </router-link>
       </div>
       <div class="text-xl text-gray-600 font-semibold mt-1">$240.00</div>
       <div class="flex space-x-2 text-sm font-medium justify-start">

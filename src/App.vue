@@ -1,9 +1,11 @@
 <template>
-  <Navbar />
-  <main>
-    <router-view />
-  </main>
-  <Footer class="fixed bottom-0" />
+  <div class="flex flex-col h-screen justify-between">
+    <Navbar />
+    <main>
+      <router-view />
+    </main>
+    <Footer />
+  </div>
 </template>
 
 <script setup>
