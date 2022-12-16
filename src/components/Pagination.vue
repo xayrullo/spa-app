@@ -315,7 +315,14 @@ const beginningPages = ref({
   third: 4,
 });
 
-onBeforeMount(async () => {});
+onBeforeMount(async () => {
+  if (route.query.page && parseInt(route.query.page) >= 4) {
+    const page = parseInt(route.query.page);
+    beginningPages.value.first = page - 1;
+    beginningPages.value.second = page;
+    beginningPages.value.third = page + 1;
+  }
+});
 
 function changePage(page) {
   if (page === productStore.pagination.pageCount) {
