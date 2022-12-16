@@ -108,7 +108,6 @@
   >
     <div class="-mt-px flex w-0 flex-1">
       <a
-        href="#"
         class="
           inline-flex
           items-center
@@ -120,6 +119,7 @@
           text-gray-500
           hover:border-gray-300 hover:text-gray-700
         "
+        @click="previousPage"
       >
         <!-- Heroicon name: mini/arrow-long-left -->
         <svg
@@ -139,51 +139,27 @@
     </div>
     <div class="hidden md:-mt-px md:flex">
       <a
-        href="#"
+        v-if="beginningPages.first > 1"
         class="
           inline-flex
           items-center
-          border-t-2 border-transparent
+          border-t-2
           px-4
           pt-4
           text-sm
           font-medium
-          text-gray-500
-          hover:border-gray-300 hover:text-gray-700
+          cursor-pointer
         "
+        :class="
+          '1' === route.query.page || !route.query.page
+            ? 'border-blue-500 text-blue-600'
+            : 'text-gray-500 hover:border-gray-300 hover:text-gray-700 border-transparent'
+        "
+        @click="emits('onChange', 1)"
         >1</a
       >
-      <a
-        href="#"
-        class="
-          inline-flex
-          items-center
-          border-t-2 border-blue-500
-          px-4
-          pt-4
-          text-sm
-          font-medium
-          text-blue-600
-        "
-        aria-current="page"
-        >2</a
-      >
-      <a
-        href="#"
-        class="
-          inline-flex
-          items-center
-          border-t-2 border-transparent
-          px-4
-          pt-4
-          text-sm
-          font-medium
-          text-gray-500
-          hover:border-gray-300 hover:text-gray-700
-        "
-        >3</a
-      >
       <span
+        v-if="beginningPages.first > 2"
         class="
           inline-flex
           items-center
@@ -197,37 +173,64 @@
         >...</span
       >
       <a
-        href="#"
         class="
           inline-flex
           items-center
-          border-t-2 border-transparent
+          border-t-2
           px-4
           pt-4
           text-sm
           font-medium
-          text-gray-500
-          hover:border-gray-300 hover:text-gray-700
+          cursor-pointer
         "
-        >8</a
+        :class="
+          beginningPages.first.toString() === route.query.page
+            ? 'border-blue-500 text-blue-600'
+            : 'text-gray-500 hover:border-gray-300 hover:text-gray-700 border-transparent'
+        "
+        @click="changePage(beginningPages.first)"
+        >{{ beginningPages.first }}</a
       >
       <a
-        href="#"
         class="
           inline-flex
           items-center
-          border-t-2 border-transparent
+          border-t-2
           px-4
           pt-4
           text-sm
           font-medium
-          text-gray-500
-          hover:border-gray-300 hover:text-gray-700
+          cursor-pointer
         "
-        >9</a
+        :class="
+          beginningPages.second.toString() === route.query.page
+            ? 'border-blue-500 text-blue-600'
+            : 'text-gray-500 hover:border-gray-300 hover:text-gray-700 border-transparent'
+        "
+        @click="changePage(beginningPages.second)"
+        >{{ beginningPages.second }}</a
       >
       <a
-        href="#"
+        class="
+          inline-flex
+          items-center
+          border-t-2
+          px-4
+          pt-4
+          text-sm
+          font-medium
+          cursor-pointer
+        "
+        :class="
+          beginningPages.third.toString() === route.query.page
+            ? 'border-blue-500 text-blue-600'
+            : 'text-gray-500 hover:border-gray-300 hover:text-gray-700 border-transparent'
+        "
+        @click="changePage(beginningPages.third)"
+        >{{ beginningPages.third }}</a
+      >
+      <span
+        v-if="beginningPages.third < productStore.pagination.pageCount"
         class="
           inline-flex
           items-center
@@ -237,9 +240,28 @@
           text-sm
           font-medium
           text-gray-500
-          hover:border-gray-300 hover:text-gray-700
         "
-        >10</a
+        >...</span
+      >
+      <a
+        v-if="beginningPages.third < productStore.pagination.pageCount"
+        class="
+          inline-flex
+          items-center
+          border-t-2
+          px-4
+          pt-4
+          text-sm
+          font-medium
+          cursor-pointer
+        "
+        :class="
+          productStore.pagination.pageCount.toString() === route.query.page
+            ? 'border-blue-500 text-blue-600'
+            : 'text-gray-500 hover:border-gray-300 hover:text-gray-700 border-transparent'
+        "
+        @click="changePage(productStore.pagination.pageCount)"
+        >{{ productStore.pagination.pageCount }}</a
       >
     </div>
     <div class="-mt-px flex w-0 flex-1 justify-end">
@@ -256,6 +278,7 @@
           text-gray-500
           hover:border-gray-300 hover:text-gray-700
         "
+        @click="nextPage"
       >
         <svg
           class="ml-3 h-5 w-5 text-gray-400"
@@ -308,7 +331,7 @@ function changePage(page) {
     beginningPages.value.second = page;
     beginningPages.value.third = page + 1;
   }
-  emits("onChange", val);
+  emits("onChange", page);
 }
 
 function previousPage() {

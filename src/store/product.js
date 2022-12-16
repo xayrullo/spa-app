@@ -5,7 +5,7 @@ export const useProductStore = defineStore("product", {
   state: () => ({
     products: [],
     pagination: {
-      limit: 24,
+      limit: 12,
       page: 1,
       total: 0,
       pageCount: 1,
