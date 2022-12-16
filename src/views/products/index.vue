@@ -57,7 +57,6 @@ async function filterByCategory(val) {
   await fetchProducts();
 }
 async function pageChanged(val) {
-  console.log("Pagechanged: ", val);
   await router.push({
     path: route.path,
     query: {

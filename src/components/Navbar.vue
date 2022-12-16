@@ -191,9 +191,7 @@ const sideBarOpen = ref(false);
 
 const signOutHandler = () => {
   authStore.userSignOut();
-  alertModalText.value = "Successfully logged out";
-  alertModalOpen.value = true;
-  router.push("/login");
+  router.push("/products");
 };
 
 const openSideBar = () => {

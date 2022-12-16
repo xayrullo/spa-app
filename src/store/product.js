@@ -19,7 +19,6 @@ export const useProductStore = defineStore("product", {
   },
   actions: {
     async loadProducts(params) {
-      console.log(params);
       return new Promise((resolve, reject) => {
         axios
           .get(

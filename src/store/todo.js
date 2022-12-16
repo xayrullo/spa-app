@@ -35,7 +35,6 @@ export const useTodoStore = defineStore("todo", {
     },
     deleteAllTodos() {},
     setTodoDone(id) {
-      console.log("todos: ", this.todos);
       this.todos.forEach((element) => {
         if (element.id === id) element.done = true;
       });
@@ -48,7 +47,6 @@ export const useTodoStore = defineStore("todo", {
       localStorage.setItem("todos", JSON.stringify(this.todos));
     },
     editTodo(id, changedContent) {
-      console.log("five");
       this.todos.forEach((element) => {
         if (element.id === id) element.content = changedContent;
       });

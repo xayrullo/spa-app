@@ -38,9 +38,6 @@ function ErrorHandler(error) {
     }
   }
 }
-
-console.log("Env: ", import.meta.env);
-
 const init = {
   request(method, url, params, data) {
     const config = {
