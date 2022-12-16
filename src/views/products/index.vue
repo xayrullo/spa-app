@@ -13,7 +13,11 @@
     >
       <ProductCard v-for="(val, ind) in products" :key="ind" :data="val" />
     </div>
-    <Pagination :pagination="productStore.pagination" />
+    <Pagination
+      v-if="productStore.pagination.pageCount > 1"
+      :pagination="productStore.pagination"
+      @onChange="pageChanged"
+    />
   </div>
 </template>
   <script setup>
@@ -52,6 +56,17 @@ async function filterByCategory(val) {
   });
   await fetchProducts();
 }
+async function pageChanged(val) {
+  console.log("Pagechanged: ", val);
+  await router.push({
+    path: route.path,
+    query: {
+      page: val,
+      category: route.query.category ? route.query.category : "all",
+    },
+  });
+  await fetchProducts();
+}
 
 async function fetchProducts() {
   const _query = { ...route.query };
@@ -59,6 +74,7 @@ async function fetchProducts() {
     .loadProducts({
       category:
         _query.category && _query.category !== "all" ? _query.category : null,
+      page: _query.page && _query.page !== "1" ? _query.page : 1,
     })
     .then((res) => {
       products.value = [...res];

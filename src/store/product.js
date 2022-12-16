@@ -4,7 +4,12 @@ import axios from "../plugins/axios";
 export const useProductStore = defineStore("product", {
   state: () => ({
     products: [],
-    pagination: {},
+    pagination: {
+      limit: 24,
+      page: 1,
+      total: 0,
+      pageCount: 1,
+    },
     product: {},
   }),
   getters: {
@@ -22,8 +27,11 @@ export const useProductStore = defineStore("product", {
               ? `products/category/${params.category}`
               : "products",
             {
-              limit: 12,
-              skip: params && params.page ? params.page : 1 /* page number */,
+              limit: this.pagination.limit,
+              skip:
+                params && params.page
+                  ? params.page
+                  : this.pagination.page /* page number */,
             }
           )
           .then((res) => {
@@ -32,6 +40,10 @@ export const useProductStore = defineStore("product", {
               limit: res.limit,
               page: res.skip,
               total: res.total,
+              pageCount:
+                res.total % res.limit > 0
+                  ? Math.trunc(res.total / res.limit) + 1
+                  : res.total / res.limit,
             };
             resolve(res.products);
           })
