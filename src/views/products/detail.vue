@@ -1,6 +1,16 @@
 <template>
   <div class="mx-auto max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8 bg-white">
-    <main class="w-full flex flex-col lg:flex-row">
+    <main
+      class="
+        bg-white
+        shadow
+        sm:overflow-hidden sm:rounded-lg
+        w-full
+        flex flex-col
+        lg:flex-row
+        mb-4
+      "
+    >
       <section
         class="
           h-fit
@@ -331,18 +341,23 @@
         </div>
       </section>
     </main>
+    <Comment />
   </div>
 </template>
 <script setup>
 import { onBeforeMount, ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
 
+import Comment from "../../components/Comment.vue";
+
 import { useProductStore } from "../../store/product";
+import { useCommentStore } from "../../store/comment";
 
 const router = useRouter();
 const route = useRoute();
 
 const productStore = useProductStore();
+const commentStore = useCommentStore();
 
 const product = ref({});
 const selectedImage = ref("");
@@ -353,6 +368,7 @@ onBeforeMount(async () => {
     product.value = res;
     selectedImage.value = res.images[0];
   });
+  await commentStore.loadComments({ id: route.params.detail });
 });
 
 function decreaseAmount() {
