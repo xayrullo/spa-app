@@ -26,39 +26,5 @@ export const useCategoryStore = defineStore("category", {
           .finally(() => {});
       });
     },
-    addTodoList(text) {
-      this.todos.push({
-        content: text,
-        done: false,
-        date: Date.now(),
-        id: uniqid(),
-      });
-      localStorage.setItem("todos", JSON.stringify(this.todos));
-    },
-    deleteTodoList(id) {
-      const todoInd = this.todos.findIndex((el) => el.id === id);
-      if (todoInd) this.todos.splice(todoInd, 1);
-    },
-    deleteAllTodos() {},
-    setTodoDone(id) {
-      console.log("todos: ", this.todos);
-      this.todos.forEach((element) => {
-        if (element.id === id) element.done = true;
-      });
-      localStorage.setItem("todos", JSON.stringify(this.todos));
-    },
-    setTodoUndone(id) {
-      this.todos.forEach((element) => {
-        if (element.id === id) element.done = false;
-      });
-      localStorage.setItem("todos", JSON.stringify(this.todos));
-    },
-    editTodo(id, changedContent) {
-      console.log("five");
-      this.todos.forEach((element) => {
-        if (element.id === id) element.content = changedContent;
-      });
-      localStorage.setItem("todos", JSON.stringify(this.todos));
-    },
   },
 });

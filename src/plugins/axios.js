@@ -58,9 +58,9 @@ const init = {
 
     if (params) {
       config.params = params;
-      config.paramsSerializer = function (params) {
-        return qs.stringify(params, { encodeValuesOnly: true });
-      };
+      // config.paramsSerializer = function (params) {
+      //   return qs.stringify(params, { encodeValuesOnly: true });
+      // };
     }
 
     const result = axios(config);
