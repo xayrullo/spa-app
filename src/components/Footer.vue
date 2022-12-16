@@ -1,5 +1,5 @@
 <template>
-  <div class="relative py-4 mt-6 flex flex-col">
+  <div class="relative py-4 mt-6 flex flex-col bg-blue-50">
     <footer>
       <div
         class="

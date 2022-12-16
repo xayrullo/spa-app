@@ -221,7 +221,7 @@ const closeAlertModal = () => {
 }
 
 .navbar {
-  @apply relative px-4 py-4 flex justify-between items-center bg-white mb-6;
+  @apply relative px-4 py-4 flex justify-between items-center bg-blue-50 mb-6;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
     rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
 

@@ -19,7 +19,7 @@ export const useProductStore = defineStore("product", {
   },
   actions: {
     async loadProducts(params) {
-      console.log("Params: ", params);
+      console.log(params);
       return new Promise((resolve, reject) => {
         axios
           .get(
@@ -46,6 +46,20 @@ export const useProductStore = defineStore("product", {
                   : res.total / res.limit,
             };
             resolve(res.products);
+          })
+          .catch((error) => {
+            reject(error);
+          })
+          .finally(() => {});
+      });
+    },
+    async loadDetail(params) {
+      return new Promise((resolve, reject) => {
+        axios
+          .get(`products/${params.id}`)
+          .then((res) => {
+            this.product = res;
+            resolve(res);
           })
           .catch((error) => {
             reject(error);

@@ -12,7 +12,7 @@
         "
       >
         <picture
-          class="relative flex items-center bg-blue-400 sm:bg-transparent"
+          class="relative flex items-center bg-blue-400 sm:bg-transparent h-60"
         >
           <button
             class="
@@ -48,7 +48,7 @@
             </svg>
           </button>
           <img
-            src="./images/image-product-1.jpg"
+            :src="selectedImage"
             alt="sneaker"
             class="
               block
@@ -113,6 +113,8 @@
           "
         >
           <div
+            v-for="(image, ind) in product.images"
+            :key="ind"
             id="1"
             class="
               w-1/5
@@ -124,72 +126,13 @@
               xl:w-[78px]
               ring-active
             "
+            @click="selectedImage = image"
           >
             <img
-              src="./images/image-product-1.jpg"
+              :src="image"
               alt="thumbnail"
               class="rounded-xl hover:opacity-50 transition active"
               id="thumb-1"
-            />
-          </div>
-
-          <div
-            id="2"
-            class="
-              w-1/5
-              cursor-pointer
-              rounded-xl
-              sm:w-28
-              md:w-32
-              lg:w-[72px]
-              xl:w-[78px]
-            "
-          >
-            <img
-              src="./images/image-product-2.jpg"
-              alt="thumbnail"
-              class="rounded-xl hover:opacity-50 transition"
-              id="thumb-2"
-            />
-          </div>
-
-          <div
-            id="3"
-            class="
-              w-1/5
-              cursor-pointer
-              rounded-xl
-              sm:w-28
-              md:w-32
-              lg:w-[72px]
-              xl:w-[78px]
-            "
-          >
-            <img
-              src="./images/image-product-3.jpg"
-              alt="thumbnail"
-              class="rounded-xl hover:opacity-50 transition"
-              id="thumb-3"
-            />
-          </div>
-
-          <div
-            id="4"
-            class="
-              w-1/5
-              cursor-pointer
-              rounded-xl
-              sm:w-28
-              md:w-32
-              lg:w-[72px]
-              xl:w-[78px]
-            "
-          >
-            <img
-              src="./images/image-product-4.jpg"
-              alt="thumbnail"
-              class="rounded-xl hover:opacity-50 transition"
-              id="thumb-4"
             />
           </div>
         </div>
@@ -200,18 +143,17 @@
         <h4
           class="font-bold text-blue-400 mb-2 uppercase text-xs tracking-widest"
         >
-          Sneaker Company
+          {{ product.brand }}
         </h4>
         <h1 class="text-very-dark mb-4 font-bold text-3xl lg:text-4xl">
-          Fall Limited Edition Sneakers
+          {{ product.title }}
         </h1>
         <p class="text-dark-grayish mb-6 text-base sm:text-lg">
-          These low-profile sneakers are your perfect casual wear companion.
-          Featuring a durable rubber outer sole, they’ll withstand everything
-          the weather can offer.
+          {{ product.description }}
         </p>
 
         <div
+          v-if="product.discountPercentage"
           class="
             flex
             items-center
@@ -222,7 +164,11 @@
         >
           <div class="flex items-center gap-4">
             <h3 class="text-very-dark font-bold text-3xl inline-block">
-              $125.00
+              ${{
+                Math.round(
+                  product.price * (1 - product.discountPercentage / 100)
+                ).toFixed(2)
+              }}
             </h3>
             <span
               class="
@@ -236,7 +182,7 @@
                 rounded-lg
                 text-sm
               "
-              >50%</span
+              >{{ product.discountPercentage }}%</span
             >
           </div>
           <p
@@ -248,8 +194,24 @@
               my-auto
             "
           >
-            $250.00
+            ${{ product.price }}
           </p>
+        </div>
+        <div
+          v-else
+          class="
+            flex
+            items-center
+            justify-between
+            mb-6
+            sm:flex-col sm:items-start
+          "
+        >
+          <div class="flex items-center gap-4">
+            <h3 class="text-very-dark font-bold text-3xl inline-block">
+              ${{ product.price }}
+            </h3>
+          </div>
         </div>
 
         <div class="flex flex-col gap-5 mb-16 sm:flex-row lg:mb-0">
@@ -270,7 +232,7 @@
               sm:w-80
             "
           >
-            <div id="minus" class="plus-minus">
+            <div id="minus" class="plus-minus" @click="decreaseAmount">
               <div
                 class="
                   w-3
@@ -297,7 +259,7 @@
                 <use fill="#FF7E1B" fill-rule="nonzero" xlink:href="#a" />
               </svg>
             </div>
-            <span id="amount" class="select-none">0</span>
+            <span id="amount" class="select-none">{{ amount }}</span>
             <div
               id="plus"
               class="
@@ -306,6 +268,7 @@
                 hover:text-blue-500
                 cursor-pointer
               "
+              @click="increaseAmount"
             >
               <svg
                 width="12"
@@ -370,3 +333,32 @@
     </main>
   </div>
 </template>
+<script setup>
+import { onBeforeMount, ref } from "vue";
+import { useRouter, useRoute } from "vue-router";
+
+import { useProductStore } from "../../store/product";
+
+const router = useRouter();
+const route = useRoute();
+
+const productStore = useProductStore();
+
+const product = ref({});
+const selectedImage = ref("");
+const amount = ref(1);
+
+onBeforeMount(async () => {
+  await productStore.loadDetail({ id: route.params.detail }).then((res) => {
+    product.value = res;
+    selectedImage.value = res.images[0];
+  });
+});
+
+function decreaseAmount() {
+  if (amount.value > 1) amount.value--;
+}
+function increaseAmount() {
+  if (amount.value < product.value.stock) amount.value++;
+}
+</script>
