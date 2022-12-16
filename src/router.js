@@ -40,14 +40,8 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore();
-  if (
-    !authStore.isLoggedIn &&
-    to.name !== "login" &&
-    to.name !== "register" &&
-    to.name !== "products" &&
-    to.name !== "productDetail"
-  )
-    return next({ name: "products" });
+  if (to.name === "my-todo")
+    return authStore.isLoggedIn ? next() : next({ name: "products" });
   next();
 });
 
